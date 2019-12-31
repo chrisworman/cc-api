@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         longitude: req.body.longitude,
         notes: req.body.notes,
       });
-    const newreport = await Report.save();
+    const newreport = await report.save();
     res.status(201).json(newreport);
   } catch (err) {
     res.status(400).json({ message: err.message });
