@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', getReport, (req, res) => {
   res.json(res.report);
-})
+});
 
 router.post('/', async (req, res) => {
   try {
@@ -56,4 +56,4 @@ async function getReport(req, res, next) {
   next();
 }
 
-module.exports = router
+module.exports = router;
