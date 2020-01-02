@@ -18,15 +18,15 @@ router.get('/:id', getReport, (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const report = new Report({
-        reportByUserId: "TODO: read user id from session",
+        reportByUserId: req.user._id,
         items: req.body.items,
         locationDescription: req.body.locationDescription,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         notes: req.body.notes,
       });
-    const newreport = await report.save();
-    res.status(201).json(newreport);
+    const newReport = await report.save();
+    res.status(201).json(newReport);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
