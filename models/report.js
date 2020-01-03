@@ -9,10 +9,6 @@ const reportSchema = new mongoose.Schema({
     type: Map,
     required: true,
   },
-  locationDescription: {
-    type: String,
-    required: false,
-  },
   latitude: {
     type: Number,
     required: true,

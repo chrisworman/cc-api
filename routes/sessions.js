@@ -22,10 +22,13 @@ router.get('/', async (req, res) => {
             return res.status(400).json({ message: 'No user' });
         }
         
-        const hashedPassword = await bcrypt.hash(password, 5);
-        const authUser = await AuthUser.findOne({ hashedPassword, userId: user._id });
+        const authUser = await AuthUser.findOne({ userId: user._id });
         if (!authUser) {
             return res.status(400).json({ message: 'No auth user' });
+        }
+
+        if (!bcrypt.compareSync(password, authUser.hashedPassword)) {
+            return res.status(400).json({ message: 'Bad password' });
         }
 
         const session = await Session.findOne({ userId: user._id });

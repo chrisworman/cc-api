@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
     const reports = await Report.find();
     res.json(reports);
   } catch (err) {
+    console.log(JSON.stringify(err));
     res.status(500).json({ message: err.message });
   }
 });
@@ -20,7 +21,6 @@ router.post('/', async (req, res) => {
     const report = new Report({
         reportByUserId: req.user._id,
         items: req.body.items,
-        locationDescription: req.body.locationDescription,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         notes: req.body.notes,

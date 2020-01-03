@@ -13,11 +13,13 @@ router.put('/', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 5);
         const existingAuthUser = await AuthUser.findOne({ userId: req.user._id });
         if (existingAuthUser) {
+            console.log('Updated existing authUser ' + existingAuthUser._id + ' with ' + hashedPassword);
             existingAuthUser.hashedPassword = hashedPassword;
             await existingAuthUser.save();
             return res.status(204).json({ message: 'Updated' });
         }
 
+        console.log('Creating authUser with ' + hashedPassword);
         const newAuthUser = new AuthUser({
             userId: req.user._id,
             hashedPassword,

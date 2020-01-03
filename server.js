@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const auth = require('./middleware/auth');
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CC_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
@@ -26,4 +26,4 @@ app.use('/users', auth, usersRouter);
 const authUsersRouter = require('./routes/authUsers');
 app.use('/authUsers', auth, authUsersRouter);
 
-app.listen(process.env.PORT, () => console.log('Server Started'));
+app.listen(process.env.CC_API_PORT, () => console.log('Server Started'));

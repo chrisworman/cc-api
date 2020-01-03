@@ -15,6 +15,28 @@ router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
 });
 
+router.post('/', async (req, res) => {
+  try {
+      const email = req.body.email;
+      if (!email || email.indexOf('@') < 0) {
+          return res.status(400).json({ message: 'Missing or invalid email' });
+      }
+
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+          return res.status(409).json({ message: 'Duplicate email address' });
+      }
+
+      const newUser = new User({
+          email,
+      });
+      await newUser.save();
+      res.status(201).json({ message: 'Created' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 async function getUser(req, res, next) {
     let user
     try {
