@@ -26,4 +26,7 @@ app.use('/users', auth, usersRouter);
 const authUsersRouter = require('./routes/authUsers');
 app.use('/authUsers', auth, authUsersRouter);
 
+const invitesRouter = require('./routes/invites');
+app.use('/invites', auth, invitesRouter);
+
 app.listen(process.env.CC_API_PORT, 'localhost', () => console.log('Server Started'));

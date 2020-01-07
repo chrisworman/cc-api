@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         }
         
         const authUser = await AuthUser.findOne({ userId: user._id });
-        if (!authUser) {
+        if (!authUser || !authUser.hashedPassword) {
             return res.status(400).json({ message: 'No auth user' });
         }
 
