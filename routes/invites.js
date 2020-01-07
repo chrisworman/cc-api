@@ -8,10 +8,11 @@ var nodemailer = require('nodemailer');
 
 router.post('/', async (req, res) => {
     try {
-        const email = req.body.email;
+        let email = req.body.email;
         if (!email || email.indexOf('@') < 0) {
             return res.status(400).json({ message: 'Missing or invalid email' });
         }
+        email = email.trim();
   
         const existingUser = await User.findOne({ email });
         if (existingUser) {
