@@ -36,7 +36,10 @@ router.post('/', async (req, res) => {
 
         const ccEmail = process.env.CC_EMAIL;
         const ccPassword = process.env.CC_EMAIL_PWD;
-        console.log('ccEmail=' + ccEmail + ' ccPassword=' + ccPassword);
+        if (!ccEmail || ccEmail.length === 0 || !ccPassword || ccPassword.length === 0) {
+            console.log('Invalid email credentials: ccEmail=' + ccEmail + ' ccPassword=' + ccPassword);
+            return res.status(500).json({ message: 'Error sending invite email: server email not configured' });
+        }
         const emailTransporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
