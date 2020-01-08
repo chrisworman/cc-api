@@ -9,26 +9,26 @@ router.get('/', async (req, res) => {
     try {
         const email = req.query.email;
         if (!email) {
-            return res.status(400).json({ message: 'No email' });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         const password = req.query.password;
         if (!password) {
-            return res.status(400).json({ message: 'No password' });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         const user = await User.findOne({ email });
         if (user == null) {
-            return res.status(400).json({ message: 'No user' });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
         
         const authUser = await AuthUser.findOne({ userId: user._id });
         if (!authUser || !authUser.hashedPassword) {
-            return res.status(400).json({ message: 'No auth user' });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         if (!bcrypt.compareSync(password, authUser.hashedPassword)) {
-            return res.status(400).json({ message: 'Bad password' });
+            return res.status(400).json({ message: 'Invalid email or password' });
         }
 
         const session = await Session.findOne({ userId: user._id });
